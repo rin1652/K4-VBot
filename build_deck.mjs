@@ -128,10 +128,10 @@ function columns(slide, leftTitle, leftText, rightTitle, rightText, top = 205) {
 }
 {
   const s = base("Chi phí tháng", "TOTAL khớp công thức SUM trong Excel; image generation chưa được cộng", 11);
-  const costText = "Ops labor                         $6,000.00\nLLM serving                       $5,452.37\nTú: security/sandbox/ops          $2,321.63\nThành: data/cloud/DR              $1,436.46\nContingency 10%                   $1,524.94\nEmbedding + gateway + licenses    $38.96\n────────────────────────────────────────\nTOTAL                             $16,774.36\n\n$8.39 / DAU / month";
+  const costText = "LLM serving                       $5,452.37\nTú: security/sandbox/ops          $2,321.63\nThành: data/cloud/DR              $1,436.46\nContingency 10%                   $924.94\nEmbedding + gateway + licenses    $38.96\nOps labor                         excluded\n────────────────────────────────────────\nTOTAL                             $10,174.36\n\n$5.09 / DAU / month";
   text(s, costText, 110, 220, 700, 350, 23, C.ink, true);
-  box(s, "Priced subtotal\n$15,249.42", 860, 235, 260, 105, C.pale, 22);
-  box(s, "Contingency\n$1,524.94", 860, 370, 260, 105, C.white, 22);
+  box(s, "Priced subtotal\n$9,249.42", 860, 235, 260, 105, C.pale, 22);
+  box(s, "Contingency\n$924.94", 860, 370, 260, 105, C.white, 22);
   text(s, "Image generation: 90k volume remains a blocker; Nova Canvas EOL means no unsupported $0.04/image charge is included.", 820, 530, 350, 90, 18, C.red, true);
   footer(s);
 }

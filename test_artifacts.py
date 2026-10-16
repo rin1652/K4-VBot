@@ -11,8 +11,8 @@ class ArtifactConsistencyTests(unittest.TestCase):
         markdown = (ROOT / "G03.md").read_text()
         deck_builder = (ROOT / "build_deck.mjs").read_text()
         total = re.search(r"^TOTAL\t.*\t([0-9]+\.[0-9]{2})\t", markdown, re.MULTILINE).group(1)
-        self.assertEqual(total, "16774.36")
-        self.assertIn("TOTAL                             $16,774.36", deck_builder)
+        self.assertEqual(total, "10174.36")
+        self.assertIn("TOTAL                             $10,174.36", deck_builder)
         self.assertIn("9.636B input", deck_builder)
         self.assertIn("1.452B output", deck_builder)
 
