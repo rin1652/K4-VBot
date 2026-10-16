@@ -27,7 +27,7 @@
   từ usage ledger để tránh 2.000 dimension tính phí.
 - **CI/CD:** một CodePipeline V1 dùng cùng artifact: build/test → staging → smoke
   test/eval → manual approval → production. Không build lại artifact khi promote.
-- **Subtotal phần Tú:** **256,16 USD/tháng**. Đây không phải `TOTAL` của nhóm.
+- **Subtotal phần Tú:** **95,59 USD/tháng** theo baseline sandbox hiện tại. Đây không phải `TOTAL` của nhóm.
 
 ## 2. Giả định và sizing
 
@@ -40,7 +40,7 @@
 | Tải trung bình trong giờ làm việc | 2,22 req/s | `1.760.000 / (220 × 3.600)` |
 | Đỉnh thiết kế | 6,67 ≈ 7 req/s | `2,22 × 3` |
 | Sandbox production | 400.000 lượt/tháng | Baseline của nhóm |
-| Sandbox staging | 20.000 lượt/tháng | 5% production cho smoke/load/eval |
+| Sandbox staging | Chưa có volume riêng | Không tự thêm volume khi đề chưa cho số |
 | Thời gian chạy code | 30 giây/lượt | Baseline của nhóm |
 | Dung lượng workspace thực dùng | 6 TB | `2.000 × 3 GB`; quota logic vẫn là 10 GB/user |
 
@@ -49,27 +49,19 @@
 Fargate tính theo giây nhưng Linux có mức tối thiểu **60 giây cho mỗi task**.
 Vì vậy chi phí phải dùng 60 giây, không dùng 30 giây:
 
-- 420.000 task × 60 giây = 7.000 task-hour được tính phí.
-- 95% task thường: 399.000 task, `0,5 vCPU + 1 GB`.
-- 5% task nặng được router nhận diện trước theo kích thước file/loại công việc:
-  21.000 task, `1 vCPU + 2 GB`; không chờ OOM rồi mới retry.
+- 400.000 task × 60 giây = 6.666,7 task-hour được tính phí do Fargate có minimum 60 giây.
+- Baseline sizing dùng `0,25 vCPU + 0,5 GB` cho mỗi task; workload timeout vẫn là 30 giây.
 - 20 GB ephemeral storage mặc định đã có trong mỗi Fargate task; không cấu hình
   storage vượt 20 GB nên không phát sinh dòng storage Fargate.
 - Giá Linux/x86 Singapore từ AWS Price List API:
   `0,05056 USD/vCPU-hour` và `0,00553 USD/GB-hour`.
 
 ```text
-Task thường:
-  399.000 × 60 / 3.600 = 6.650 task-hour
-  CPU    = 6.650 × 0,5 × 0,05056 = 168,06 USD
-  Memory = 6.650 × 1   × 0,00553 =  36,77 USD
+400.000 × 60 / 3.600 = 6.666,7 task-hour
+CPU    = 400.000 × 60 × 0,25 × 0,0000089944 = 53,97 USD
+Memory = 400.000 × 60 × 0,5  × 0,0000009889 = 11,87 USD
 
-Task nặng:
-  21.000 × 60 / 3.600 = 350 task-hour
-  CPU    = 350 × 1 × 0,05056 = 17,70 USD
-  Memory = 350 × 2 × 0,00553 =  3,87 USD
-
-Tổng sandbox = 226,40 USD/tháng
+Tổng sandbox = 65,83 USD/tháng; đơn giá/SKU cần `PENDING_VERIFICATION` trực tiếp trước khi nộp.
 ```
 
 Với production, tốc độ đến trung bình là `400.000 / 792.000 = 0,505 task/s`;
@@ -86,7 +78,7 @@ khi merge toàn bộ nhóm.
 
 ```tsv
 Component	Ý nghĩa	Ghi chú	Chi phí/tháng (USD)	Bằng chứng
-sandbox	ECS Fargate Linux/x86 cô lập code agent, mỗi task hủy sau một lượt	ap-southeast-1 multi-AZ; 399000 task thường × 60s × 0.5 vCPU/1GB + 21000 task nặng × 60s × 1 vCPU/2GB; giá CPU 0.05056/vCPU-h, RAM 0.00553/GB-h; 20GB ephemeral nằm trong Fargate	226.40	E01; E02; E03
+sandbox	ECS Fargate Linux/x86 cô lập code agent, mỗi task hủy sau một lượt	ap-southeast-1 multi-AZ; 400000 task × 60s minimum × 0.25 vCPU/0.5GB; workload TTL 30s; 20GB ephemeral nằm trong Fargate; giá cần PENDING_VERIFICATION	65.83	E01; E02; E03; PENDING_VERIFICATION
 authn	SSO tập đoàn OIDC và MFA tại IdP, ALB xác thực trước khi vào VBot	Chi phí 0 vì authenticate-oidc nằm trong dòng load_balancer của team; MFA bắt buộc tại IdP; backend kiểm chữ ký x-amzn-oidc-data và signer ARN	0	E04; E05
 authz	RBAC/ABAC, ACL tài liệu gốc và PostgreSQL RLS cho workspace	Chi phí 0 vì policy enforcement nằm trong compute và database của team; mọi truy vấn bắt buộc có principal sub, tenant/user_id và ACL filter	0	E06
 secrets_kms	Hai AWS KMS customer-managed symmetric keys cho prod và staging	ap-southeast-1; 2 key × 1 USD + 100000 Encrypt/Decrypt/GenerateDataKey × 0.03 USD/10000 = 2.30; OAuth token dùng envelope encryption và encryption context	2.30	E07; E08
@@ -105,14 +97,14 @@ cicd	Amazon ECR lưu image bất biến của app và sandbox	10 GB-month × 0.1
 
 | Component | USD/tháng |
 |---|---:|
-| `sandbox` | 226,40 |
+| `sandbox` | 65,83 |
 | `authn` | 0,00 |
 | `authz` | 0,00 |
 | `secrets_kms` | 8,80 |
 | `governance` | 0,00 |
 | `monitoring` | 17,96 |
 | `cicd` | 3,00 |
-| **SUBTOTAL TÚ — không phải TOTAL nhóm** | **256,16** |
+| **SUBTOTAL TÚ — không phải TOTAL nhóm** | **95,59** |
 
 ## 4. Bảng bằng chứng cho sheet `BangChung`
 
@@ -168,8 +160,8 @@ flowchart LR
 
 1. Orchestrator xác thực `sub`, kiểm ACL rồi tạo `job_id` gắn bất biến với
    `user_id`; queue message không chứa OAuth refresh token.
-2. `RunTask` chọn private subnet ở hai AZ và một trong hai task definition đã pin image digest:
-   `0,5 vCPU/1 GB` hoặc `1 vCPU/2 GB`.
+2. `RunTask` chọn private subnet ở hai AZ và task definition baseline đã pin image digest:
+   `0,25 vCPU/0,5 GB`; profile lớn hơn chỉ bật sau benchmark.
 3. Container chạy non-root, `readonlyRootFilesystem=true`, drop Linux
    capabilities, không privileged, giới hạn PID/file size, timeout cứng 30 giây
    cho code và deadline 10 phút cho toàn agent job.
@@ -311,7 +303,7 @@ không cần điều tra.
 6. Canary, theo dõi SLO rồi rollback về digest trước nếu lỗi.
 
 Staging app/database/HA compute thuộc các dòng của thành viên Cloud/HA và Data;
-20.000 sandbox run staging đã nằm trong 226,40 USD ở phần Tú.
+chưa tự cộng sandbox staging run vì đề chưa cho volume riêng.
 
 ## 9. Nội dung hai slide của Tú
 
@@ -323,8 +315,8 @@ credential hoặc Internet.
 - `sub → policy → users/{user_id}/jobs/{job_id}`; chỉ copy đúng input cần dùng.
 - Một Fargate task/lượt: hardware isolation, non-root, read-only, CPU/RAM/time
   limit, task role rỗng, default-deny egress, hủy sau chạy.
-- 400k prod + 20k staging; 95% `0,5 vCPU/1 GB`, 5% `1 vCPU/2 GB`.
-- Fargate bill tối thiểu 60 giây: **226,40 USD/tháng**; peak khoảng 91 task,
+- 400k sandbox workload; profile baseline `0,25 vCPU/0,5 GB`, 30s timeout.
+- Fargate bill tối thiểu 60 giây: **65,83 USD/tháng theo working estimate**; peak khoảng 91 task,
   quota 120.
 - Kết quả phải qua malware/type/size scan; mọi denied egress/metadata probe đều
   tạo security alert.
@@ -344,7 +336,7 @@ ba chi phí này trong phần Tú.
   budget đều có alert.
 - Usage ledger tính USD/user/đơn vị mà không tạo metric cardinality cao.
 - Chi phí Tú ngoài sandbox: secrets/KMS 8,80 + monitoring 17,96 + CI/CD 3,00;
-  **subtotal toàn phần Tú = 256,16 USD/tháng**.
+  **subtotal toàn phần Tú = 95,59 USD/tháng theo working estimate**.
 
 ## 10. Ba câu trả lời hội đồng
 
@@ -404,7 +396,7 @@ trước deploy.
 
 ### Kiến trúc sư trưởng phải làm
 
-- Paste các dòng TSV và bảng E-code; cộng **256,16 USD** đúng một lần.
+- Paste các dòng TSV và bảng E-code; không cộng subtotal handoff hai lần; sandbox working estimate là **65,83 USD**.
 - Thay mọi evidence phụ thuộc team bằng E-code thực tế nếu team đổi ALB/compute/S3.
 - Đồng bộ subtotal/`TOTAL` giữa XLSX và slide; chạy validator của `task.html`.
 
@@ -412,11 +404,11 @@ trước deploy.
 
 1. **IdP phải hỗ trợ OIDC.** Nếu chỉ có SAML, dòng `authn = 0` cần thiết kế và giá
    Cognito broker.
-2. **Task lifetime:** 226,40 USD giả định start-to-stop không quá 60 giây. Nếu
-   image pull làm p95 thành 90 giây, sandbox xấp xỉ 339,60 USD; cần image nhỏ và
+2. **Task lifetime:** 65,83 USD là working estimate với minimum 60 giây. Nếu
+   image pull làm p95 thành 90 giây, sandbox tăng theo thời gian billable; cần image nhỏ và
    đo staging trước khi chốt.
-3. **Task profile:** 0,5 vCPU/1 GB cần benchmark với workload thật. Router cấp
-   1 vCPU/2 GB cho 5% task nặng; nếu tỷ lệ cao hơn phải cập nhật XLSX.
+3. **Task profile:** 0,25 vCPU/0,5 GB cần benchmark với workload thật; nếu cần
+   profile nặng hơn phải cập nhật XLSX.
 4. **PII tiếng Việt:** Presidio mặc định chưa đủ; custom recognizer và eval recall
    là điều kiện release, không phải phần có thể bỏ để tiết kiệm.
 5. **Phần giao nhau:** `monitoring/cicd` theo đề gốc thuộc Cloud/HA nhưng theo

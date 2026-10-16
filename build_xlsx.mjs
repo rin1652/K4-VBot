@@ -31,7 +31,7 @@ const evidenceRows = [
 
 const rows = [
   ["compute", "App/API containers và staging", "AWS Fargate Linux ARM, ap-southeast-1. Prod 4 tasks 0.5 vCPU/1GB × 730h; staging 1 task × 220h; rate 0.0000089944 USD/vCPU-s + 0.0000009889 USD/GB-s.", 62.16, "E02"],
-  ["llm", "LLM serving theo APAC Geo Cross-Region", "Bedrock apac.amazon.nova-lite-v1:0: 6,512M input × 0.063 + 950.4M output × 0.252; apac.amazon.nova-pro-v1:0: 4,576M × 0.84 + 739.2M × 3.36 USD/1M; agent steps C3=2, C4=3, C5=4; ảnh render SVG/HTML.", 6977.31, "E01; E18; E19; E20"],
+  ["llm", "LLM serving theo APAC Geo Cross-Region", "Giả định cần đo: Lite C1–3 = 6,512M input × 0.063 + 950.4M output × 0.252; Pro C4–5 = 3,124M input × 0.84 + 501.6M output × 3.36 USD/1M; tổng 2.376M model calls; image tách riêng. PENDING_VERIFICATION giá APAC.", 4959.2928, "E01; E18; E19; PENDING_VERIFICATION"],
   ["embedding", "Embedding và vector hoá tài liệu", "Titan Text Embeddings V2: 50M corpus token + 1,760M query token = 1,810M × 0.02 USD/1M; vector index pgvector trong Aurora; Singapore endpoint.", 36.20, "E06; E23"],
   ["gateway", "HTTP API, quota và budget gateway", "API Gateway HTTP API 1.76M × 1.00 USD/M + 10 budget alarms × 0.10 USD; routing, retry, quota và token log chạy trong app; ap-southeast-1.", 2.76, "E03; E13"],
   ["load_balancer", "Load balancer HA", "ALB 2 AZ × 730h × 0.0225 USD/h + 2 LCU × 730h × 0.008 USD/h; TLS termination và health check; ap-southeast-1.", 43.07, "E04"],
@@ -41,7 +41,7 @@ const rows = [
   ["vector_db", "Vector DB và search index", "pgvector extension trong Aurora PostgreSQL, metadata ACL lọc trước truy vấn; chi phí incremental nằm trong dòng database.", 0, "E06"],
   ["object_storage", "Workspace riêng và file", "S3 Standard production 6,000GB + staging 100GB = 6,100GB × 0.023 USD/GB-month; prefix per user, SSE-KMS, lifecycle cho bản cũ.", 140.30, "E07"],
   ["cache_queue", "Cache phiên và hàng đợi", "ElastiCache cache.t4g.small 2 node × 730h × 0.032 USD/h + SQS 1.76M request × 0.40 USD/M; HA 2 AZ.", 47.43, "E08; E09"],
-  ["sandbox", "Sandbox chạy code agent", "Fargate ARM sandbox 400,000 lượt × 30s × (0.25 vCPU × 0.0000089944 + 0.5GB × 0.0000009889) USD/s; 60 task slots, no egress, TTL 30s.", 35.98, "E02; E11"],
+  ["sandbox", "Sandbox chạy code agent", "Fargate ARM ap-southeast-1; 400,000 lượt × billing minimum 60s × (0.25 vCPU × 0.0000089944 + 0.5GB × 0.0000009889) USD/s; workload TTL 30s, no egress. PENDING_VERIFICATION SKU.", 65.8332, "E02; E11; PENDING_VERIFICATION"],
   ["connectors", "Google/M365/Notion/Jira/Confluence", "OAuth delegated connectors chạy trong app Fargate, rate limit và webhook; phí SaaS bên thứ ba ngoài phạm vi; chi phí incremental AWS bằng 0.", 0, "E02; E10"],
   ["secrets_kms", "Secrets, KMS, token vault", "Secrets Manager 10 secret × 0.40 USD/secret-month + KMS 2 key × 1.00 USD/key-month; OAuth token xoay vòng; ap-southeast-1.", 6.00, "E10"],
   ["backup_dr", "Backup, RTO/RPO và DR", "AWS Backup/S3 Glacier Deep Archive 6,000GB × 0.00099 USD/GB-month + 6,000GB logical backup copy × 0.00099; daily backup, RPO 1h, RTO 4h.", 11.88, "E14"],
@@ -64,7 +64,7 @@ quote.showGridLines = false;
 evidence.showGridLines = false;
 quote.getRange("A1:E1").values = [["Component", "Ý nghĩa", "Ghi chú", "Chi phí/tháng (USD)", "Bằng chứng"]];
 quote.getRange(`A2:E${rows.length + 1}`).values = rows.map(r => [r[0], r[1], r[2], r[3], r[4]]);
-quote.getRange(`A${rows.length + 2}:E${rows.length + 2}`).values = [["TOTAL", "Tổng hạ tầng + vận hành", "Tổng các dòng chi phí; USD/tháng, chưa VAT; 2,000 DAU.", total, ""]];
+quote.getRange(`A${rows.length + 2}:E${rows.length + 2}`).values = [["TOTAL", "Tổng hạ tầng + vận hành", "Tổng các dòng chi phí; USD/tháng, chưa VAT; 2,000 DAU; working estimate có PENDING_VERIFICATION.", total, "FORMULA: SUM(D2:D23)"]];
 quote.getRange(`D${rows.length + 2}`).formulas = [[`=SUM(D2:D${rows.length + 1})`]];
 quote.getRange("A1:E1").format = { fill: "#0B6E99", font: { color: "#FFFFFF", bold: true }, wrapText: true, verticalAlignment: "center" };
 quote.getRange(`A2:E${rows.length + 2}`).format = { wrapText: true, verticalAlignment: "top", borders: { preset: "all", style: "thin", color: "#D2DCE3" } };
@@ -78,7 +78,7 @@ quote.getRange("E:E").format.columnWidth = 18;
 quote.freezePanes.freezeRows(1);
 
 evidence.getRange("A1:E1").values = [["evidence_id", "Mô tả", "Link", "Ngày chụp", "Ảnh chụp / ghi nhận"]];
-evidence.getRange(`A2:E${evidenceRows.length + 1}`).values = evidenceRows.map(r => [...r, "Trang giá mở ngày 2026-10-16; cập nhật lại screenshot trước khi nộp nếu AWS thay đổi SKU."]);
+evidence.getRange(`A2:E${evidenceRows.length + 1}`).values = evidenceRows.map(r => [...r, "PENDING_VERIFICATION: link chính thức để đối chiếu; chưa nhúng ảnh chụp raster, cần chụp SKU/region/đơn giá trước khi nộp."]);
 evidence.getRange("A1:E1").format = { fill: "#0B6E99", font: { color: "#FFFFFF", bold: true }, wrapText: true };
 evidence.getRange(`A2:E${evidenceRows.length + 1}`).format = { wrapText: true, verticalAlignment: "top", borders: { preset: "all", style: "thin", color: "#D2DCE3" } };
 evidence.getRange("A:A").format.columnWidth = 14;

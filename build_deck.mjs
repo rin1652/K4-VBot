@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import { Presentation, PresentationFile } from "@oai/artifact-tool";
+import { PDFDocument } from "pdf-lib";
 
 const root = new URL(".", import.meta.url).pathname;
 const outDir = root + ".deck-build";
@@ -28,15 +29,15 @@ function text(slide, value, left, top, width, height, fontSize = 18, color = col
   text(s, "Giả định tải và lựa chọn cloud", 64, 82, 760, 54, 38, colors.ink, true);
   text(s, "2.000 DAU · AWS ap-southeast-1 · APAC Geo Cross-Region · chưa VAT", 64, 145, 900, 28, 19, colors.muted, false);
   box(s, "1.76M\nrequest/tháng", 64, 230, 220, 122, colors.white, 24);
-  box(s, "6.688B input\n0.986B output token", 302, 230, 250, 122, colors.pale, 22);
+  box(s, "9.636B input\n1.452B output token", 302, 230, 250, 122, colors.pale, 22);
   box(s, "6.67 req/s\nđỉnh 3x", 570, 230, 190, 122, colors.white, 24);
-  box(s, "3,333 task-h\nsandbox/tháng", 778, 230, 220, 122, colors.white, 22);
+  box(s, "6,667 billable\ntask-h/tháng", 778, 230, 220, 122, colors.white, 22);
   box(s, "6,100 GB\nworkspace", 1016, 230, 200, 122, colors.white, 22);
   text(s, "Công thức chính", 64, 400, 240, 26, 18, colors.blue, true);
-  text(s, "2,000 × 22 × 40 = 1.76M request\n1.76M ÷ 220h ÷ 3,600 = 2.22 req/s; × 3 = 6.67 req/s\n400,000 × 30s ÷ 3,600 = 3,333 task-hours\n2,000 × 3 GB + 100 GB staging = 6,100 GB", 64, 438, 560, 150, 20, colors.ink, false);
+  text(s, "2,000 × 22 × 40 = 1.76M request\n1.76M ÷ 220h ÷ 3,600 = 2.22 req/s; × 3 = 6.67 req/s\n2.376M model calls; 9.636B input + 1.452B output token\n400,000 × minimum 60s ÷ 3,600 = 6,667 billable task-hours\n2,000 × 3 GB + 100 GB staging = 6,100 GB", 64, 438, 560, 180, 18, colors.ink, false);
   text(s, "Lựa chọn chi phí", 700, 400, 240, 26, 18, colors.blue, true);
-  text(s, "• Bedrock API qua PrivateLink; không giữ GPU chạy 24/7\n• APAC Geo: Lite C1–3; Pro C4–5; agent steps C3=2, C4=3, C5=4\n• Titan Image G1 v2 không dùng: legacy/EOL; Nova sinh SVG/HTML render sandbox\n• Titan Embeddings V2 + S3 + pgvector trong Aurora", 700, 438, 510, 180, 18, colors.ink, false);
-  text(s, "TOTAL 15,001.24 USD/tháng · 7.50 USD/DAU/tháng", 64, 650, 1120, 30, 22, colors.orange, true);
+  text(s, "• Bedrock API qua PrivateLink; không giữ GPU chạy 24/7\n• Routing Lite C1–3 / Pro C4–5 là baseline để benchmark; không dùng agent-step để nhân token\n• Titan Image G1 v2 không dùng: legacy/EOL; ảnh SVG/HTML là giả định cần benchmark\n• Titan Embeddings V2 + S3 + pgvector trong Aurora; giá LLM/sandbox PENDING_VERIFICATION", 700, 438, 510, 190, 17, colors.ink, false);
+  text(s, "TOTAL working estimate 12,814.26 USD/tháng · 6.41 USD/DAU/tháng", 64, 650, 1120, 30, 21, colors.orange, true);
 }
 
 {
@@ -71,4 +72,12 @@ for (const [i, slide] of deck.slides.items.entries()) {
 }
 const pptx = await PresentationFile.exportPptx(deck);
 await pptx.save(root + "G03_slide.pptx");
-console.log("Wrote G03_slide.pptx");
+const pdfDoc = await PDFDocument.create();
+for (let i = 1; i <= deck.slides.items.length; i += 1) {
+  const pngBytes = await fs.readFile(`${outDir}/slide-${String(i).padStart(2, "0")}.png`);
+  const image = await pdfDoc.embedPng(pngBytes);
+  const page = pdfDoc.addPage([1280, 720]);
+  page.drawImage(image, { x: 0, y: 0, width: 1280, height: 720 });
+}
+await fs.writeFile(root + "G03_slide.pdf", await pdfDoc.save());
+console.log("Wrote G03_slide.pptx and G03_slide.pdf");
