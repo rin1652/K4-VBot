@@ -41,6 +41,7 @@ function columns(slide, leftTitle, leftText, rightTitle, rightText, top = 205) {
 
 {
   const s = base("Giả định và tính tải", "Nguồn sự thật: sizing.py · token/model-call là giả định trước telemetry", 1);
+  box(s, "Học viên: Trần Tuấn Tú · 2A202602840    |    Đinh Ngọc Đức · 2A202602935    |    Nguyễn Đình Phúc · 2A202602953\nNguyễn Việt Thành · 2A202602924    |    Đoàn Tuấn Long · 2A202602609", 56, 160, 1160, 42, C.white, 13);
   box(s, "1.760M\nrequests/tháng", 56, 215, 210, 110, C.white, 23);
   box(s, "2.376M\nmodel calls", 286, 215, 210, 110, C.pale, 23);
   box(s, "9.636B input\n1.452B output", 516, 215, 230, 110, C.white, 22);
@@ -147,7 +148,7 @@ for (const [i, slide] of deck.slides.items.entries()) {
   await fs.writeFile(path.join(outDir, `slide-${String(i + 1).padStart(2, "0")}.png`), new Uint8Array(await png.arrayBuffer()));
 }
 const pptx = await PresentationFile.exportPptx(deck);
-await pptx.save(path.join(root, "G03_slide.pptx"));
+await pptx.save(path.join(root, "G03_slide_students.pptx"));
 const pdfDoc = await PDFDocument.create();
 for (let i = 1; i <= deck.slides.items.length; i += 1) {
   const bytes = await fs.readFile(path.join(outDir, `slide-${String(i).padStart(2, "0")}.png`));
@@ -155,5 +156,5 @@ for (let i = 1; i <= deck.slides.items.length; i += 1) {
   const page = pdfDoc.addPage([1280, 720]);
   page.drawImage(image, { x: 0, y: 0, width: 1280, height: 720 });
 }
-await fs.writeFile(path.join(root, "G03_slide.pdf"), await pdfDoc.save());
-console.log("Wrote G03_slide.pptx and G03_slide.pdf (12 slides)");
+await fs.writeFile(path.join(root, "G03_slide_students.pdf"), await pdfDoc.save());
+console.log("Wrote G03_slide_students.pptx and G03_slide_students.pdf (12 slides)");
