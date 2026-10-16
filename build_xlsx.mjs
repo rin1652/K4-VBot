@@ -1,61 +1,89 @@
 import fs from "node:fs/promises";
+import path from "node:path";
 import { Workbook, SpreadsheetFile } from "@oai/artifact-tool";
 
 const root = new URL(".", import.meta.url).pathname;
-const out = root + "G03_baogia.xlsx";
-const evidenceRows = [
-  ["E01", "AWS Bedrock model pricing, Nova Lite/Nova Pro input-output token meters", "https://aws.amazon.com/bedrock/pricing/", "2026-10-16"],
-  ["E02", "AWS Fargate Linux ARM vCPU, memory and per-second billing", "https://aws.amazon.com/fargate/pricing/", "2026-10-16"],
-  ["E03", "API Gateway HTTP API per million request pricing", "https://aws.amazon.com/api-gateway/pricing/", "2026-10-16"],
-  ["E04", "Application Load Balancer hourly and LCU pricing", "https://aws.amazon.com/elasticloadbalancing/pricing/", "2026-10-16"],
-  ["E05", "Amazon Cognito user-pool MAU and authentication pricing", "https://aws.amazon.com/cognito/pricing/", "2026-10-16"],
-  ["E06", "Aurora Serverless v2 ACU pricing and regional calculator", "https://aws.amazon.com/rds/aurora/pricing/", "2026-10-16"],
-  ["E07", "Amazon S3 Standard storage pricing", "https://aws.amazon.com/s3/pricing/", "2026-10-16"],
-  ["E08", "ElastiCache node pricing", "https://aws.amazon.com/elasticache/pricing/", "2026-10-16"],
-  ["E09", "Amazon SQS request pricing", "https://aws.amazon.com/sqs/pricing/", "2026-10-16"],
-  ["E10", "AWS Secrets Manager and KMS pricing", "https://aws.amazon.com/secrets-manager/pricing/", "2026-10-16"],
-  ["E11", "AWS VPC NAT Gateway hourly and data-processing pricing", "https://aws.amazon.com/vpc/pricing/", "2026-10-16"],
-  ["E12", "AWS WAF web ACL, rule and request pricing", "https://aws.amazon.com/waf/pricing/", "2026-10-16"],
-  ["E13", "Amazon CloudWatch logs ingestion and metrics pricing", "https://aws.amazon.com/cloudwatch/pricing/", "2026-10-16"],
-  ["E14", "AWS Backup and S3 Glacier Deep Archive pricing", "https://aws.amazon.com/backup/pricing/", "2026-10-16"],
-  ["E15", "AWS CodePipeline, CodeBuild and ECR pricing", "https://aws.amazon.com/codepipeline/pricing/", "2026-10-16"],
-  ["E16", "AWS region and service availability reference", "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/", "2026-10-16"],
-  ["E17", "AWS PrivateLink interface endpoint pricing", "https://aws.amazon.com/privatelink/pricing/", "2026-10-16"],
-  ["E18", "Nova Lite APAC Geo inference profile and supported destinations", "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-lite.html", "2026-10-16"],
-  ["E19", "Nova Pro APAC Geo inference profile and supported destinations", "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-pro.html", "2026-10-16"],
-  ["E20", "Titan Image Generator G1 v2 lifecycle, region and endpoint support", "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-titan-image-generator-g1-v2.html", "2026-10-16"],
-  ["E21", "Claude Opus 5.5 benchmark reference and public token price", "https://www.anthropic.com/claude-opus-5-5", "2026-10-16"],
-  ["E22", "Claude Sonnet 5.5 benchmark fallback reference and public token price", "https://www.anthropic.com/claude-sonnet-5-5", "2026-10-16"],
-  ["E23", "Titan Text Embeddings V2 price and model availability", "https://aws.amazon.com/blogs/machine-learning/get-started-with-amazon-titan-text-embeddings-v2-a-new-state-of-the-art-embedding-model-on-aws/", "2026-10-16"],
+const out = path.join(root, "G03_baogia.xlsx");
+const pending = "PENDING_VERIFICATION";
+
+function parseTsv(text) {
+  return text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(Boolean).map(line => line.split("\t"));
+}
+
+function extractTuRows(text) {
+  const block = text.match(/```tsv\n([\s\S]*?)\n```/);
+  if (!block) throw new Error("Tu TSV block not found");
+  return parseTsv(block[1]).slice(1).filter(row => row[0] !== "TOTAL");
+}
+
+function num(value) {
+  if (value === "PENDING") return 0;
+  const n = Number(value);
+  if (!Number.isFinite(n)) throw new Error(`Non-numeric cost: ${value}`);
+  return n;
+}
+
+const thanhText = await fs.readFile(path.join(root, "docs/Thanh_cloud_data/Thanh_cost_2000.tsv"), "utf8");
+const tuText = await fs.readFile(path.join(root, "Tu_security_ops.md"), "utf8");
+const thanhRows = parseTsv(thanhText).slice(1).filter(row => row[0] !== "SUBTOTAL_VERIFIED");
+const tuRows = extractTuRows(tuText);
+
+const phucRows = [
+  ["llm", "Bedrock text model inference", "Baseline calls from sizing.py: C1 Micro 792000 calls (2376M input, 316.8M output) × 0.047/0.188 USD per 1M; C2 Lite 440000 (1760M, 264M) × 0.081/0.324; C3 Lite 528000 (2376M, 369.6M) × 0.081/0.324; C4 Pro 528000 (2640M, 422.4M) × 1.08/4.32; C5 Lite 88000 (484M, 79.2M) × 0.081/0.324; total 2376000 calls, 9636M input, 1452M output. Price source is team-provided Singapore table; benchmark and account availability remain pending.", 5452.3656, "E60; E61"],
+  ["embedding", "Text embedding and vectorization", "Titan Text Embeddings V2 working estimate: 50M corpus tokens + 1760M query tokens = 1810M × 0.02 USD/1M; pgvector storage is already in Thành database line; Singapore availability and measured query volume require pilot verification.", 36.20, "E62"],
+  ["gateway", "HTTP API and LLM gateway", "API Gateway HTTP API ap-southeast-1: 1.76M requests × 1.00 USD/M + 10 standard budget/latency alarms × 0.10 USD; quotas, retries and token ledger run in app; no duplicate gateway charge in Thành Fargate.", 2.76, "E63"],
+  ["ops_labor", "SRE/MLOps operations", "1 FTE SRE/MLOps × 6000 USD/month; business-hours operations, escalation, model evaluation and DR rehearsal; labor is an explicit planning assumption.", 6000.00, "NA"],
+  ["licenses", "SaaS/API licenses and support", "No paid-seat inventory or contract was supplied; license pricing is nằm trong trạng thái PENDING_VERIFICATION and excluded from the working estimate; zero is not a price claim.", 0, `${pending}; https://developers.google.com/terms/api-services-user-data-policy; https://learn.microsoft.com/en-us/graph/overview`],
+  ["contingency", "Contingency reserve", "10% × priced subtotal before contingency; covers traffic, log and egress variance; formula is generated in workbook and remains below the 10% cap.", 0, "NA"],
 ];
 
-const rows = [
-  ["compute", "App/API containers và staging", "AWS Fargate Linux ARM, ap-southeast-1. Prod 4 tasks 0.5 vCPU/1GB × 730h; staging 1 task × 220h; rate 0.0000089944 USD/vCPU-s + 0.0000009889 USD/GB-s.", 62.16, "E02"],
-  ["llm", "LLM serving theo APAC Geo Cross-Region", "Giả định cần đo: Lite C1–3 = 6,512M input × 0.063 + 950.4M output × 0.252; Pro C4–5 = 3,124M input × 0.84 + 501.6M output × 3.36 USD/1M; tổng 2.376M model calls; image tách riêng. PENDING_VERIFICATION giá APAC.", 4959.2928, "E01; E18; E19; PENDING_VERIFICATION"],
-  ["embedding", "Embedding và vector hoá tài liệu", "Titan Text Embeddings V2: 50M corpus token + 1,760M query token = 1,810M × 0.02 USD/1M; vector index pgvector trong Aurora; Singapore endpoint.", 36.20, "E06; E23"],
-  ["gateway", "HTTP API, quota và budget gateway", "API Gateway HTTP API 1.76M × 1.00 USD/M + 10 budget alarms × 0.10 USD; routing, retry, quota và token log chạy trong app; ap-southeast-1.", 2.76, "E03; E13"],
-  ["load_balancer", "Load balancer HA", "ALB 2 AZ × 730h × 0.0225 USD/h + 2 LCU × 730h × 0.008 USD/h; TLS termination và health check; ap-southeast-1.", 43.07, "E04"],
-  ["authn", "SSO OIDC/SAML và MFA", "Cognito user pool 2,000 MAU × 0.0055 USD/MAU; SSO liên kết IdP tập đoàn, MFA; ap-southeast-1.", 11.00, "E05"],
-  ["authz", "RBAC/ABAC và ACL tài liệu", "Policy enforcement trong app gateway và pgvector metadata filter; chi phí nằm trong Fargate/Aurora, zero incremental USD/month.", 0, "E02; E06"],
-  ["database", "CSDL metadata và quyền", "Aurora PostgreSQL Serverless v2 HA 2 AZ: 2 replicas × 0.5 ACU × 730h × 0.12 USD/ACU-h + 100GB × 0.10 USD/GB-month; staging dùng 0.5 ACU 220h.", 98.20, "E06"],
-  ["vector_db", "Vector DB và search index", "pgvector extension trong Aurora PostgreSQL, metadata ACL lọc trước truy vấn; chi phí incremental nằm trong dòng database.", 0, "E06"],
-  ["object_storage", "Workspace riêng và file", "S3 Standard production 6,000GB + staging 100GB = 6,100GB × 0.023 USD/GB-month; prefix per user, SSE-KMS, lifecycle cho bản cũ.", 140.30, "E07"],
-  ["cache_queue", "Cache phiên và hàng đợi", "ElastiCache cache.t4g.small 2 node × 730h × 0.032 USD/h + SQS 1.76M request × 0.40 USD/M; HA 2 AZ.", 47.43, "E08; E09"],
-  ["sandbox", "Sandbox chạy code agent", "Fargate ARM ap-southeast-1; 400,000 lượt × billing minimum 60s × (0.25 vCPU × 0.0000089944 + 0.5GB × 0.0000009889) USD/s; workload TTL 30s, no egress. PENDING_VERIFICATION SKU.", 65.8332, "E02; E11; PENDING_VERIFICATION"],
-  ["connectors", "Google/M365/Notion/Jira/Confluence", "OAuth delegated connectors chạy trong app Fargate, rate limit và webhook; phí SaaS bên thứ ba ngoài phạm vi; chi phí incremental AWS bằng 0.", 0, "E02; E10"],
-  ["secrets_kms", "Secrets, KMS, token vault", "Secrets Manager 10 secret × 0.40 USD/secret-month + KMS 2 key × 1.00 USD/key-month; OAuth token xoay vòng; ap-southeast-1.", 6.00, "E10"],
-  ["backup_dr", "Backup, RTO/RPO và DR", "AWS Backup/S3 Glacier Deep Archive 6,000GB × 0.00099 USD/GB-month + 6,000GB logical backup copy × 0.00099; daily backup, RPO 1h, RTO 4h.", 11.88, "E14"],
-  ["monitoring", "Logs, metrics, traces và LLM observability", "CloudWatch Logs 20GB ingest × 0.50 USD/GB + 100 custom metrics × 0.30 USD/metric-month + alarms 10 × 0.10 USD; 12-month archive S3.", 43.00, "E13; E07"],
-  ["governance", "Guardrail, DLP, audit, eval gate", "Guardrail/DLP policy engine chạy trong app Fargate; audit 12 tháng lưu S3; eval gate trong CI/CD; chi phí incremental AWS bằng 0.", 0, "E02; E07; E15"],
-  ["network", "VPC, NAT, WAF và Bedrock PrivateLink", "2 NAT × 730h × 0.059 + 50GB NAT × 0.059 + WAF 1 ACL/2 rule/1.76M request + 1 Bedrock interface endpoint/AZ × 2 AZ × 730h × 0.01 + 50GB endpoint × 0.01; private subnets, sandbox no egress.", 118.20, "E11; E12; E17"],
-  ["cicd", "CI/CD, registry, IaC, staging", "CodePipeline 1 pipeline × 1 USD + CodeBuild 10h × 0.005 USD/min × 60 + ECR 10GB × 0.10 USD/GB-month; staging deploy mỗi ngày.", 4.00, "E15"],
-  ["ops_labor", "SRE/MLOps vận hành", "1 FTE SRE/MLOps × 6,000 USD/tháng; trực giờ hành chính, on-call escalation, model eval và diễn tập DR.", 6000.00, "NA"],
-  ["licenses", "License phần mềm và support", "OSS policy engine, pgvector và OpenTelemetry dưới license cộng đồng; paid SaaS ngoài phạm vi; chi phí license incremental = 0 USD/tháng.", 0, "E06; E13"],
-  ["contingency", "Dự phòng", "10% × subtotal trước dự phòng; bao phủ biến động request, log và egress; tính từ các dòng chi phí bên trên.", 0, "NA"],
+const rows = [...thanhRows, ...tuRows, ...phucRows].map(row => {
+  let note = row[2];
+  note = note.replace(/miễn phí/gi, "không tính thêm");
+  if (row[0] === "connectors" && row[1] === "License/quyền API bên thứ ba") {
+    note = `${note}; license đang nằm trong trạng thái PENDING_VERIFICATION và chưa đưa vào TOTAL.`;
+  }
+  return [row[0], row[1], note, num(row[3]), row[4]];
+});
+const base = rows.reduce((sum, row) => sum + row[3], 0);
+const contingency = Math.round(base * 0.10 * 100) / 100;
+rows[rows.length - 1][3] = contingency;
+const total = Math.round((base + contingency) * 100) / 100;
+
+const evidenceRows = [];
+const seen = new Set();
+function addEvidence(id, description, link, date, imagePath = null) {
+  if (seen.has(id)) return;
+  seen.add(id);
+  evidenceRows.push({ id, description, link, date, imagePath });
+}
+
+const manifest = JSON.parse(await fs.readFile(path.join(root, "docs/Thanh_cloud_data/evidence_manifest.json"), "utf8"));
+for (const item of manifest) {
+  const id = String(item.code).replace(/^E/, "E");
+  const source = String(item.source).replace(/\[([^\]]+)\]\([^)]*\)/g, "$1");
+  addEvidence(id, `Thành evidence: ${source}; SHA-256 ${item.sha256}`, item.source.match(/https?:\/\/[^)\s]+/)?.[0] || "https://aws.amazon.com/pricing/", item.capture_date.split(" ")[0], path.join(root, "docs/Thanh_cloud_data", item.file));
+}
+const tuEvidence = [
+  ["E41", "Fargate ARM 60-second minimum and image-pull billing", "https://aws.amazon.com/fargate/pricing/", "Tu_evidence/E-SBX-01_fargate.png"],
+  ["E42", "Fargate ARM Singapore vCPU/GB SKU and rate catalog", "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECS/current/ap-southeast-1/index.json", "Tu_evidence/E-CATALOG-01_singapore_skus.png"],
+  ["E43", "Sandbox VPC endpoint hourly and data processing rates", "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-1/index.json", "Tu_evidence/E-CATALOG-01_singapore_skus.png"],
+  ["E44", "Cognito enterprise federation MAU pricing", "https://aws.amazon.com/cognito/pricing/", "Tu_evidence/E-AUTH-01_cognito.png"],
+  ["E45", "IAM and PostgreSQL RLS included mechanisms", "https://aws.amazon.com/iam/pricing/", null],
+  ["E46", "KMS key and symmetric API request pricing", "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/awskms/current/ap-southeast-1/index.json", "Tu_evidence/E-KMS-01_kms.png"],
+  ["E47", "Secrets Manager secret-month and API request pricing", "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSSecretsManager/current/ap-southeast-1/index.json", "Tu_evidence/E-SEC-01_secrets.png"],
+  ["E48", "Bedrock Guardrails content, PII and image filter pricing", "https://aws.amazon.com/bedrock/pricing/", "Tu_evidence/E-GOV-01_guardrails.png"],
+  ["E49", "InvokeGuardrailChecks prompt-attack pricing", "https://aws.amazon.com/bedrock/pricing/", "Tu_evidence/E-GOV-02_prompt_attack.png"],
+  ["E50", "CloudTrail data-event pricing", "https://aws.amazon.com/cloudtrail/pricing/", "Tu_evidence/E-AUD-01_cloudtrail.png"],
+  ["E51", "S3 audit storage and PUT pricing", "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/ap-southeast-1/index.json", "Tu_evidence/E-AUD-02_s3.png"],
+  ["E52", "CloudWatch Logs, metrics, alarms and X-Ray pricing", "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonCloudWatch/current/ap-southeast-1/index.json", "Tu_evidence/E-MON-01_cloudwatch.png"],
+  ["E53", "CodePipeline, CodeBuild and ECR pricing", "https://aws.amazon.com/codepipeline/pricing/", "Tu_evidence/E-CICD-01_codebuild.png"],
 ];
-const subtotal = rows.reduce((s, r) => s + r[3], 0);
-rows[rows.length - 1][3] = Math.round(subtotal * 0.10 * 100) / 100;
-const total = Math.round((subtotal + rows[rows.length - 1][3]) * 100) / 100;
+for (const [id, description, link, image] of tuEvidence) addEvidence(id, description, link, "2026-10-16", image ? path.join(root, image) : null);
+addEvidence("E60", "Team-recorded Singapore standard token prices: Nova Micro 0.047/0.188, Lite 0.081/0.324, Pro 1.08/4.32 USD per 1M input/output; benchmark/account availability pending", "https://aws.amazon.com/bedrock/pricing/", "2026-10-16", path.join(root, "docs/prices/nova_singapore_standard.png"));
+addEvidence("E61", "Nova Micro/Lite/Pro model cards and APAC inference availability; no quality benchmark result", "https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html", "2026-10-16", null);
+addEvidence("E62", "Titan Text Embeddings V2 public price reference", "https://aws.amazon.com/blogs/machine-learning/get-started-with-amazon-titan-text-embeddings-v2-a-new-state-of-the-art-embedding-model-on-aws/", "2026-10-16", null);
+addEvidence("E63", "API Gateway HTTP API pricing", "https://aws.amazon.com/api-gateway/pricing/", "2026-10-16", null);
 
 const workbook = Workbook.create();
 const quote = workbook.worksheets.add("BaoGia");
@@ -63,33 +91,46 @@ const evidence = workbook.worksheets.add("BangChung");
 quote.showGridLines = false;
 evidence.showGridLines = false;
 quote.getRange("A1:E1").values = [["Component", "Ý nghĩa", "Ghi chú", "Chi phí/tháng (USD)", "Bằng chứng"]];
-quote.getRange(`A2:E${rows.length + 1}`).values = rows.map(r => [r[0], r[1], r[2], r[3], r[4]]);
-quote.getRange(`A${rows.length + 2}:E${rows.length + 2}`).values = [["TOTAL", "Tổng hạ tầng + vận hành", "Tổng các dòng chi phí; USD/tháng, chưa VAT; 2,000 DAU; working estimate có PENDING_VERIFICATION.", total, "FORMULA: SUM(D2:D23)"]];
+quote.getRange(`A2:E${rows.length + 1}`).values = rows;
+quote.getRange(`A${rows.length + 2}:E${rows.length + 2}`).values = [["TOTAL", "Tổng hạ tầng + vận hành", `Tổng component đã ghép; working estimate; image generation chưa tính vì Nova Canvas EOL và phương án production thay thế chưa xác minh.`, total, `FORMULA: SUM(D2:D${rows.length + 1})`]];
 quote.getRange(`D${rows.length + 2}`).formulas = [[`=SUM(D2:D${rows.length + 1})`]];
 quote.getRange("A1:E1").format = { fill: "#0B6E99", font: { color: "#FFFFFF", bold: true }, wrapText: true, verticalAlignment: "center" };
 quote.getRange(`A2:E${rows.length + 2}`).format = { wrapText: true, verticalAlignment: "top", borders: { preset: "all", style: "thin", color: "#D2DCE3" } };
 quote.getRange(`D2:D${rows.length + 2}`).format.numberFormat = [["0.00"]];
 quote.getRange(`A${rows.length + 2}:E${rows.length + 2}`).format = { fill: "#E8EEF2", font: { bold: true }, wrapText: true };
 quote.getRange("A:A").format.columnWidth = 18;
-quote.getRange("B:B").format.columnWidth = 28;
-quote.getRange("C:C").format.columnWidth = 82;
+quote.getRange("B:B").format.columnWidth = 31;
+quote.getRange("C:C").format.columnWidth = 94;
 quote.getRange("D:D").format.columnWidth = 20;
-quote.getRange("E:E").format.columnWidth = 18;
+quote.getRange("E:E").format.columnWidth = 30;
 quote.freezePanes.freezeRows(1);
 
-evidence.getRange("A1:E1").values = [["evidence_id", "Mô tả", "Link", "Ngày chụp", "Ảnh chụp / ghi nhận"]];
-evidence.getRange(`A2:E${evidenceRows.length + 1}`).values = evidenceRows.map(r => [...r, "PENDING_VERIFICATION: link chính thức để đối chiếu; chưa nhúng ảnh chụp raster, cần chụp SKU/region/đơn giá trước khi nộp."]);
+evidence.getRange("A1:E1").values = [["evidence_id", "Mô tả", "Link nguồn", "Ngày chụp", "Ảnh chụp thực tế / ghi nhận"]];
+evidence.getRange(`A2:E${evidenceRows.length + 1}`).values = evidenceRows.map(e => [e.id, e.description, e.link, e.date, e.imagePath ? `Attached: ${path.basename(e.imagePath)}` : `${pending}: no raster screenshot available for this source`]);
 evidence.getRange("A1:E1").format = { fill: "#0B6E99", font: { color: "#FFFFFF", bold: true }, wrapText: true };
 evidence.getRange(`A2:E${evidenceRows.length + 1}`).format = { wrapText: true, verticalAlignment: "top", borders: { preset: "all", style: "thin", color: "#D2DCE3" } };
 evidence.getRange("A:A").format.columnWidth = 14;
-evidence.getRange("B:B").format.columnWidth = 48;
-evidence.getRange("C:C").format.columnWidth = 58;
-evidence.getRange("D:D").format.columnWidth = 16;
-evidence.getRange("E:E").format.columnWidth = 70;
+evidence.getRange("B:B").format.columnWidth = 64;
+evidence.getRange("C:C").format.columnWidth = 70;
+evidence.getRange("D:D").format.columnWidth = 18;
+evidence.getRange("E:E").format.columnWidth = 38;
 evidence.freezePanes.freezeRows(1);
 
+for (let i = 0; i < evidenceRows.length; i += 1) {
+  const e = evidenceRows[i];
+  if (!e.imagePath) continue;
+  try {
+    const bytes = await fs.readFile(e.imagePath);
+    const contentType = e.imagePath.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
+    evidence.images.add({ blob: bytes, contentType, anchor: { from: { row: i + 1, col: 4 }, extent: { widthPx: 220, heightPx: 120 } }, alt: `${e.id} ${e.description}` });
+    evidence.getRange(`E${i + 2}`).values = [[`Attached image: ${path.basename(e.imagePath)}`]];
+  } catch (error) {
+    evidence.getRange(`E${i + 2}`).values = [[`${pending}: ${path.basename(e.imagePath)} unavailable`]];
+  }
+}
+
 await workbook.recalculate();
-const check = await workbook.inspect({ kind: "region", sheetId: "BaoGia", range: `A1:E${rows.length + 2}`, maxChars: 2000 });
+const check = await workbook.inspect({ kind: "region", sheetId: "BaoGia", range: `A1:E${rows.length + 2}`, maxChars: 3000 });
 console.log(check.ndjson);
 await (await SpreadsheetFile.exportXlsx(workbook)).save(out);
-console.log(`Wrote ${out}; subtotal=${subtotal.toFixed(2)} contingency=${rows.at(-1)[3].toFixed(2)} total=${total.toFixed(2)}`);
+console.log(`Wrote ${out}; priced_subtotal=${base.toFixed(2)} contingency=${contingency.toFixed(2)} total=${total.toFixed(2)} components=${new Set(rows.map(r => r[0])).size} evidence=${evidenceRows.length}`);

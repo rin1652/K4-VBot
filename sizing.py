@@ -43,11 +43,11 @@ TIERS = [
 ]
 
 PROCESSING_TYPES = {
-    "Cấp 1": "LLM + RAG",
-    "Cấp 2": "LLM + DOCX/XLSX/PPTX pipeline",
-    "Cấp 3": "LLM + sandbox; Agent khi cần",
-    "Cấp 4": "Agent + connectors/tools",
-    "Cấp 5": "LLM + image/pipeline; ảnh tính riêng",
+    "Cấp 1": "Nova Micro + RAG",
+    "Cấp 2": "Nova Lite + DOCX/XLSX/PPTX pipeline",
+    "Cấp 3": "Nova Lite + sandbox; Agent khi cần",
+    "Cấp 4": "Nova Pro + connectors/tools",
+    "Cấp 5": "Nova Lite + image/pipeline; ảnh tính riêng",
 }
 
 

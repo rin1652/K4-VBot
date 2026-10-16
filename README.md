@@ -7,7 +7,7 @@ Bộ hồ sơ kiến trúc, sizing và báo giá cho VBot Workplace: trợ lý A
 - `sizing.py`: phân biệt request/model call, tính token billable theo từng model call, RPS, sandbox, ảnh và storage từ baseline.
 - `build_xlsx.py`: gọi artifact-tool để dựng `G03_baogia.xlsx`.
 - `build_xlsx.mjs`: builder workbook gồm sheet `BaoGia` và `BangChung`.
-- `build_deck.mjs`: builder deck 2 slide.
+- `build_deck.mjs`: builder deck 12 slide.
 - `architecture.mmd`: sơ đồ kiến trúc Mermaid.
 - `G03.md`: prompt nền, bảng TSV, bằng chứng, nội dung slide và câu trả lời hội đồng.
 - `G03_baogia.xlsx`: báo giá có công thức `TOTAL = SUM(...)`.
@@ -60,6 +60,6 @@ soffice --headless --convert-to pdf --outdir . G03_slide.pptx
 - 400.000 lượt sandbox/tháng × 30 giây workload; Fargate billing minimum 60 giây = 6.667 billable task-hours.
 - 90.000 ảnh/tháng.
 - 6.000 GB production + 100 GB staging = 6.100 GB total.
-- Tổng working estimate: 12.814,26 USD/tháng, chưa VAT; LLM và sandbox còn `PENDING_VERIFICATION`.
+- Tổng working estimate: 16.774,36 USD/tháng, chưa VAT; image generation và một số availability/benchmark gate còn blocker.
 - Bedrock dùng APAC Geo Cross-Region từ Singapore qua PrivateLink; prompt/output có thể tới destination Region trong APAC.
-- Titan Image Generator G1 v2 không dùng vì model legacy/EOL; 90.000 ảnh dùng Nova sinh SVG/HTML và render trong sandbox.
+- Nova Canvas không dùng vì EOL 2026-09-30; 90.000 ảnh vẫn là blocker, chưa cộng model ảnh thay thế chưa xác minh.
