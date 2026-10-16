@@ -51,4 +51,6 @@ soffice --headless --convert-to pdf --outdir . G03_slide.pptx
 - 400.000 lượt sandbox/tháng × 30 giây = 3.333 task-hours.
 - 90.000 ảnh/tháng.
 - 6.000 GB workspace.
-- Tổng báo giá: 11.674,74 USD/tháng, chưa VAT.
+- Tổng báo giá: 15.001,24 USD/tháng, chưa VAT.
+- Bedrock dùng APAC Geo Cross-Region từ Singapore qua PrivateLink; prompt/output có thể tới destination Region trong APAC.
+- Titan Image Generator G1 v2 không dùng vì model legacy/EOL; 90.000 ảnh dùng Nova sinh SVG/HTML và render trong sandbox.
