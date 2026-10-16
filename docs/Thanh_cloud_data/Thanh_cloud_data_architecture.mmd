@@ -1,0 +1,42 @@
+flowchart TB
+ U[User + enterprise IdP] --> W[Route53 / WAF]
+ W --> L[ALB regional - 2 AZ]
+ subgraph SG[Singapore ap-southeast-1]
+  subgraph A[AZ A]
+   APIA[Private API Fargate]
+   WA[Private worker Fargate]
+   NA[Public NAT A]
+   EPA[4 private endpoint ENI]
+   DBA[RDS PostgreSQL primary + pgvector]
+  end
+  subgraph B[AZ B]
+   APIB[Private API Fargate]
+   WB[Private worker Fargate]
+   NB[Public NAT B]
+   EPB[4 private endpoint ENI]
+   DBB[RDS synchronous standby]
+  end
+  Q[SQS jobs + DLQ]
+  S[S3 workspace prod / staging - gateway endpoint]
+  AU[S3 audit Object Lock]
+  BR[Bedrock runtime / SQS / KMS / Secrets Manager]
+  ST[Staging API + worker + Single-AZ DB]
+ end
+ L --> APIA & APIB
+ L --> ST
+ APIA & APIB --> DBA
+ DBA <-->|Synchronous replication| DBB
+ APIA & APIB --> Q
+ Q --> WA & WB
+ WA & WB --> DBA
+ APIA & WA --> EPA
+ APIB & WB --> EPB
+ EPA & EPB --> BR
+ APIA & APIB & WA & WB --> S
+ APIA & APIB & WA & WB --> AU
+ WA --> NA
+ WB --> NB
+ NA & NB --> SAAS[Google / Microsoft / Notion / Atlassian - user OAuth]
+ SAAS -->|Webhook hints| W
+ S -->|Same-region replication - monitor lag| BK[Backup account S3 Standard + Object Lock]
+ DBA --> PITR[RDS PITR / snapshots]

@@ -1,0 +1,162 @@
+{
+  "formatVersion" : "v1.0",
+  "disclaimer" : "This pricing list is for informational purposes only. All prices are subject to the additional terms included in the pricing pages on http://aws.amazon.com. All Free Tier prices are also subject to the terms included at https://aws.amazon.com/free/",
+  "offerCode" : "AmazonECR",
+  "version" : "20260911124425",
+  "publicationDate" : "2026-09-11T12:44:25Z",
+  "products" : {
+    "89GGK2YQ36GY48X4" : {
+      "sku" : "89GGK2YQ36GY48X4",
+      "productFamily" : "EC2 Container Registry",
+      "attributes" : {
+        "servicecode" : "AmazonECR",
+        "location" : "Asia Pacific (Singapore)",
+        "locationType" : "AWS Region",
+        "usagetype" : "APS1-AsyncActions-ImageSigning",
+        "operation" : "",
+        "regionCode" : "ap-southeast-1",
+        "servicename" : "Amazon EC2 Container Registry (ECR)"
+      }
+    },
+    "X5EQDW938JJTPJEE" : {
+      "sku" : "X5EQDW938JJTPJEE",
+      "productFamily" : "EC2 Container Registry",
+      "attributes" : {
+        "servicecode" : "AmazonECR",
+        "location" : "Asia Pacific (Singapore)",
+        "locationType" : "AWS Region",
+        "usagetype" : "APS1-TimedStorage-Archive-ByteHrs",
+        "operation" : "",
+        "regionCode" : "ap-southeast-1",
+        "servicename" : "Amazon EC2 Container Registry (ECR)"
+      }
+    },
+    "3GBYJUQQW9ZK74XN" : {
+      "sku" : "3GBYJUQQW9ZK74XN",
+      "productFamily" : "EC2 Container Registry",
+      "attributes" : {
+        "servicecode" : "AmazonECR",
+        "location" : "Asia Pacific (Singapore)",
+        "locationType" : "AWS Region",
+        "usagetype" : "APS1-Retrieval-Archive",
+        "operation" : "",
+        "regionCode" : "ap-southeast-1",
+        "servicename" : "Amazon EC2 Container Registry (ECR)"
+      }
+    },
+    "7V2YHG7PQ82BEXNB" : {
+      "sku" : "7V2YHG7PQ82BEXNB",
+      "productFamily" : "EC2 Container Registry",
+      "attributes" : {
+        "servicecode" : "AmazonECR",
+        "location" : "Asia Pacific (Singapore)",
+        "locationType" : "AWS Region",
+        "usagetype" : "APS1-TimedStorage-ByteHrs",
+        "operation" : "",
+        "regionCode" : "ap-southeast-1",
+        "servicename" : "Amazon EC2 Container Registry (ECR)",
+        "storageType" : "S3"
+      }
+    }
+  },
+  "terms" : {
+    "OnDemand" : {
+      "3GBYJUQQW9ZK74XN" : {
+        "3GBYJUQQW9ZK74XN.JRTCKXETXF" : {
+          "offerTermCode" : "JRTCKXETXF",
+          "sku" : "3GBYJUQQW9ZK74XN",
+          "effectiveDate" : "2025-11-01T00:00:00Z",
+          "priceDimensions" : {
+            "3GBYJUQQW9ZK74XN.JRTCKXETXF.6YS6EN2CT7" : {
+              "rateCode" : "3GBYJUQQW9ZK74XN.JRTCKXETXF.6YS6EN2CT7",
+              "description" : "$0.03 per GB for Retrieval-Archive in Asia Pacific (Singapore)",
+              "beginRange" : "0",
+              "endRange" : "Inf",
+              "unit" : "GB",
+              "pricePerUnit" : {
+                "USD" : "0.0300000000"
+              },
+              "appliesTo" : [ ]
+            }
+          },
+          "termAttributes" : { }
+        }
+      },
+      "X5EQDW938JJTPJEE" : {
+        "X5EQDW938JJTPJEE.JRTCKXETXF" : {
+          "offerTermCode" : "JRTCKXETXF",
+          "sku" : "X5EQDW938JJTPJEE",
+          "effectiveDate" : "2025-11-01T00:00:00Z",
+          "priceDimensions" : {
+            "X5EQDW938JJTPJEE.JRTCKXETXF.TMYMY8RHJP" : {
+              "rateCode" : "X5EQDW938JJTPJEE.JRTCKXETXF.TMYMY8RHJP",
+              "description" : "$0.10 per GB-Mo from 0 to 153,600 for TimedStorage-Archive-ByteHrs in Asia Pacific (Singapore)",
+              "beginRange" : "0",
+              "endRange" : "153600",
+              "unit" : "GB-Mo",
+              "pricePerUnit" : {
+                "USD" : "0.1000000000"
+              },
+              "appliesTo" : [ ]
+            },
+            "X5EQDW938JJTPJEE.JRTCKXETXF.GPHXDESFBB" : {
+              "rateCode" : "X5EQDW938JJTPJEE.JRTCKXETXF.GPHXDESFBB",
+              "description" : "$0.07 per GB-Mo from 153,600 for TimedStorage-Archive-ByteHrs in Asia Pacific (Singapore)",
+              "beginRange" : "153600",
+              "endRange" : "Inf",
+              "unit" : "GB-Mo",
+              "pricePerUnit" : {
+                "USD" : "0.0700000000"
+              },
+              "appliesTo" : [ ]
+            }
+          },
+          "termAttributes" : { }
+        }
+      },
+      "7V2YHG7PQ82BEXNB" : {
+        "7V2YHG7PQ82BEXNB.JRTCKXETXF" : {
+          "offerTermCode" : "JRTCKXETXF",
+          "sku" : "7V2YHG7PQ82BEXNB",
+          "effectiveDate" : "2025-11-01T00:00:00Z",
+          "priceDimensions" : {
+            "7V2YHG7PQ82BEXNB.JRTCKXETXF.6YS6EN2CT7" : {
+              "rateCode" : "7V2YHG7PQ82BEXNB.JRTCKXETXF.6YS6EN2CT7",
+              "description" : "$0.10 per GB-month of data storage",
+              "beginRange" : "0",
+              "endRange" : "Inf",
+              "unit" : "GB-Mo",
+              "pricePerUnit" : {
+                "USD" : "0.1000000000"
+              },
+              "appliesTo" : [ ]
+            }
+          },
+          "termAttributes" : { }
+        }
+      },
+      "89GGK2YQ36GY48X4" : {
+        "89GGK2YQ36GY48X4.JRTCKXETXF" : {
+          "offerTermCode" : "JRTCKXETXF",
+          "sku" : "89GGK2YQ36GY48X4",
+          "effectiveDate" : "2025-11-01T00:00:00Z",
+          "priceDimensions" : {
+            "89GGK2YQ36GY48X4.JRTCKXETXF.6YS6EN2CT7" : {
+              "rateCode" : "89GGK2YQ36GY48X4.JRTCKXETXF.6YS6EN2CT7",
+              "description" : "$0.02 per Count for AsyncActions-ImageSigning in Asia Pacific (Singapore)",
+              "beginRange" : "0",
+              "endRange" : "Inf",
+              "unit" : "Count",
+              "pricePerUnit" : {
+                "USD" : "0.0200000000"
+              },
+              "appliesTo" : [ ]
+            }
+          },
+          "termAttributes" : { }
+        }
+      }
+    }
+  },
+  "attributesList" : { }
+}

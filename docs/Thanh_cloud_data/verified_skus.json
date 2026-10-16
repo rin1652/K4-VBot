@@ -1,0 +1,233 @@
+[
+  {
+    "service": "AmazonECS",
+    "sku": "YQWFZ9WNR4X9DUPX",
+    "attributes": {
+      "servicecode": "AmazonECS",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "tenancy": "Shared",
+      "usagetype": "APS1-Fargate-vCPU-Hours:perCPU",
+      "operation": "",
+      "cputype": "perCPU",
+      "regionCode": "ap-southeast-1",
+      "servicename": "Amazon Elastic Container Service"
+    },
+    "rateCode": "YQWFZ9WNR4X9DUPX.JRTCKXETXF.6YS6EN2CT7",
+    "rate": {
+      "rateCode": "YQWFZ9WNR4X9DUPX.JRTCKXETXF.6YS6EN2CT7",
+      "description": "AWS Fargate - vCPU - Asia Pacific (Singapore)",
+      "beginRange": "0",
+      "endRange": "Inf",
+      "unit": "hours",
+      "pricePerUnit": {
+        "USD": "0.0505600000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-09-11T12:44:25Z"
+  },
+  {
+    "service": "AmazonECS",
+    "sku": "QS3CZ6GMHQ9NKE65",
+    "attributes": {
+      "servicecode": "AmazonECS",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "tenancy": "Shared",
+      "usagetype": "APS1-Fargate-GB-Hours",
+      "operation": "",
+      "memorytype": "perGB",
+      "regionCode": "ap-southeast-1",
+      "servicename": "Amazon Elastic Container Service"
+    },
+    "rateCode": "QS3CZ6GMHQ9NKE65.JRTCKXETXF.6YS6EN2CT7",
+    "rate": {
+      "rateCode": "QS3CZ6GMHQ9NKE65.JRTCKXETXF.6YS6EN2CT7",
+      "description": "AWS Fargate - Memory - Asia Pacific (Singapore)",
+      "beginRange": "0",
+      "endRange": "Inf",
+      "unit": "hours",
+      "pricePerUnit": {
+        "USD": "0.0055300000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-09-11T12:44:25Z"
+  },
+  {
+    "service": "AmazonVPC",
+    "sku": "ZW3HVQKP8FYZ6Y6K",
+    "attributes": {
+      "servicecode": "AmazonVPC",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "endpointType": "PrivateLink",
+      "group": "VPCE:VpcEndpoint",
+      "groupDescription": "Hourly charge for VPC Endpoints",
+      "usagetype": "APS1-VpcEndpoint-Hours",
+      "operation": "VpcEndpoint",
+      "regionCode": "ap-southeast-1",
+      "servicename": "Amazon Virtual Private Cloud"
+    },
+    "rateCode": "ZW3HVQKP8FYZ6Y6K.JRTCKXETXF.6YS6EN2CT7",
+    "rate": {
+      "rateCode": "ZW3HVQKP8FYZ6Y6K.JRTCKXETXF.6YS6EN2CT7",
+      "description": "$0.013 per VPC Endpoint Hour",
+      "beginRange": "0",
+      "endRange": "Inf",
+      "unit": "Hrs",
+      "pricePerUnit": {
+        "USD": "0.0130000000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-09-17T19:05:28Z"
+  },
+  {
+    "service": "AmazonVPC",
+    "sku": "5APZT8JXA5B8ZYFH",
+    "attributes": {
+      "servicecode": "AmazonVPC",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "endpointType": "PrivateLink",
+      "group": "VPCE:VpcEndpoint",
+      "groupDescription": "Charge for per GB data processed by VPC Endpoints",
+      "usagetype": "APS1-VpcEndpoint-Bytes",
+      "operation": "VpcEndpoint",
+      "regionCode": "ap-southeast-1",
+      "servicename": "Amazon Virtual Private Cloud"
+    },
+    "rateCode": "5APZT8JXA5B8ZYFH.JRTCKXETXF.D7RZ6WCPVW",
+    "rate": {
+      "rateCode": "5APZT8JXA5B8ZYFH.JRTCKXETXF.D7RZ6WCPVW",
+      "description": "$0.01 per GB for upto 1 PB monthly data processed by VPC Endpoints",
+      "beginRange": "0",
+      "endRange": "1048576",
+      "unit": "GB",
+      "pricePerUnit": {
+        "USD": "0.0100000000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-09-17T19:05:28Z"
+  },
+  {
+    "service": "AmazonCloudWatch",
+    "sku": "ZEKCE7VGMSM5XZPW",
+    "attributes": {
+      "servicecode": "AmazonCloudWatch",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "group": "Ingested Logs",
+      "groupDescription": "Existing system, application, and custom log files",
+      "usagetype": "APS1-DataProcessing-Bytes",
+      "operation": "PutLogEvents",
+      "logsDestination": "Amazon CloudWatch Logs",
+      "regionCode": "ap-southeast-1",
+      "servicename": "AmazonCloudWatch",
+      "version": "Current"
+    },
+    "rateCode": "ZEKCE7VGMSM5XZPW.JRTCKXETXF.6YS6EN2CT7",
+    "rate": {
+      "rateCode": "ZEKCE7VGMSM5XZPW.JRTCKXETXF.6YS6EN2CT7",
+      "description": "$0.70 per GB custom log data ingested in Standard log class - Asia Pacific (Singapore)",
+      "beginRange": "0",
+      "endRange": "Inf",
+      "unit": "GB",
+      "pricePerUnit": {
+        "USD": "0.7000000000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-10-07T11:55:40Z"
+  },
+  {
+    "service": "AmazonCloudWatch",
+    "sku": "RKCBFFXUWXG8KUQY",
+    "attributes": {
+      "servicecode": "AmazonCloudWatch",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "storageMedia": "Amazon S3",
+      "group": "Amazon CloudWatch Standard Storage pricing current",
+      "groupDescription": "Amazon CloudWatch Logs Storage Current version",
+      "usagetype": "APS1-TimedStorage-ByteHrs",
+      "operation": "",
+      "regionCode": "ap-southeast-1",
+      "servicename": "AmazonCloudWatch",
+      "version": "Current"
+    },
+    "rateCode": "RKCBFFXUWXG8KUQY.JRTCKXETXF.6YS6EN2CT7",
+    "rate": {
+      "rateCode": "RKCBFFXUWXG8KUQY.JRTCKXETXF.6YS6EN2CT7",
+      "description": "$0.03 per GB-mo of log storage - Asia Pacific (Singapore)",
+      "beginRange": "0",
+      "endRange": "Inf",
+      "unit": "GB-Mo",
+      "pricePerUnit": {
+        "USD": "0.0300000000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-10-07T11:55:40Z"
+  },
+  {
+    "service": "AmazonCloudWatch",
+    "sku": "ERS2PGV5BX4XH4WQ",
+    "attributes": {
+      "servicecode": "AmazonCloudWatch",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "group": "Alarm",
+      "groupDescription": "CloudWatch Alarms",
+      "usagetype": "APS1-CW:AlarmMonitorUsage",
+      "operation": "",
+      "alarmType": "Standard",
+      "regionCode": "ap-southeast-1",
+      "servicename": "AmazonCloudWatch"
+    },
+    "rateCode": "ERS2PGV5BX4XH4WQ.JRTCKXETXF.6YS6EN2CT7",
+    "rate": {
+      "rateCode": "ERS2PGV5BX4XH4WQ.JRTCKXETXF.6YS6EN2CT7",
+      "description": "$0.10 per alarm metric month (standard resolution) - Asia Pacific (Singapore)",
+      "beginRange": "0",
+      "endRange": "Inf",
+      "unit": "Alarms",
+      "pricePerUnit": {
+        "USD": "0.1000000000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-10-07T11:55:40Z"
+  },
+  {
+    "service": "AmazonCloudWatch",
+    "sku": "2BF5WZ4QVWF9XRRT",
+    "attributes": {
+      "servicecode": "AmazonCloudWatch",
+      "location": "Asia Pacific (Singapore)",
+      "locationType": "AWS Region",
+      "group": "Metric",
+      "groupDescription": "CloudWatch Custom Metrics",
+      "usagetype": "APS1-CW:MetricMonitorUsage",
+      "operation": "",
+      "regionCode": "ap-southeast-1",
+      "servicename": "AmazonCloudWatch"
+    },
+    "rateCode": "2BF5WZ4QVWF9XRRT.JRTCKXETXF.A6VD9GXV7W",
+    "rate": {
+      "rateCode": "2BF5WZ4QVWF9XRRT.JRTCKXETXF.A6VD9GXV7W",
+      "description": "$0.30 per metric-month for the first 10,000 metrics - Asia Pacific (Singapore)",
+      "beginRange": "0",
+      "endRange": "10000",
+      "unit": "Metrics",
+      "pricePerUnit": {
+        "USD": "0.3000000000"
+      },
+      "appliesTo": []
+    },
+    "publicationDate": "2026-10-07T11:55:40Z"
+  }
+]
