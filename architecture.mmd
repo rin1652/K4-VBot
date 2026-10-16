@@ -1,0 +1,20 @@
+flowchart LR
+  U[User / SSO + MFA\nauthn] --> WAF[WAF + TLS\nnetwork]
+  WAF --> LB[ALB multi-AZ\nload_balancer]
+  LB --> APP[App Fargate multi-AZ\ncompute]
+  APP --> GW[HTTP API + LLM gateway\ngateway]
+  APP --> DB[(Aurora PostgreSQL HA\ndatabase)]
+  APP --> VEC[(pgvector\nvector_db)]
+  APP --> CACHE[(ElastiCache + SQS\ncache_queue)]
+  APP --> S3[(S3 per-user workspace\nobject_storage)]
+  APP --> SEC[Secrets Manager + KMS\nsecrets_kms]
+  APP --> CON[OAuth connectors\nconnectors]
+  GW --> BR[Bedrock Nova routing\nllm + embedding]
+  APP --> SB[ECS Fargate sandbox\nno egress, 30s TTL\nsandbox]
+  APP --> GOV[Guardrail + DLP + audit\ngovernance]
+  APP --> MON[CloudWatch logs/metrics\nmonitoring]
+  DB --> BAK[S3 backup + DR\nbackup_dr]
+  APP --> CICD[CodePipeline + ECR + IaC\ncicd]
+  CON -->|ACL filter| VEC
+  SB -->|result| APP
+  BR -->|stream tokens| GW
