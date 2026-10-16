@@ -13,6 +13,13 @@ Bộ hồ sơ kiến trúc, sizing và báo giá cho VBot Workplace: trợ lý A
 - `G03_baogia.xlsx`: báo giá có công thức `TOTAL = SUM(...)`.
 - `G03_slide.pptx` / `G03_slide.pdf`: deck trình bày.
 
+## Hồ sơ Thành — Data, hạ tầng lõi và DR
+
+- [Nhiệm vụ 2: Thành](docs/VBot_Nhiem_vu_2_Thanh.md): phương án connectors/ACL, pgvector/workspace, ECS, database, queue/cache, mạng, HA/backup/DR và kịch bản 4.000 DAU.
+- Gồm 45 dòng báo giá TSV, 14 mã bằng chứng với 31 ảnh nhúng, nội dung 2 slide, 3 dòng workspace gửi Tú và 3 đáp án hội đồng.
+- Dự toán riêng phần Thành: **1.425,77 USD/tháng ở 2.000 DAU**, **2.577,29 USD/tháng ở 4.000 DAU**, chưa VAT. Khi ghép nhóm cần đối chiếu các khoản S3/audit/network dùng chung để tránh cộng trùng.
+- File Markdown có ảnh nhúng nên dung lượng khoảng 11 MB; tải file nếu GitHub không hiển thị đầy đủ bản xem trước.
+
 ## Chạy sizing
 
 ```bash
