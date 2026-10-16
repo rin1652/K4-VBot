@@ -15,10 +15,12 @@ Bộ hồ sơ kiến trúc, sizing và báo giá cho VBot Workplace: trợ lý A
 
 ## Hồ sơ Thành — Data, hạ tầng lõi và DR
 
-- [Nhiệm vụ 2: Thành](docs/VBot_Nhiem_vu_2_Thanh.md): phương án connectors/ACL, pgvector/workspace, ECS, database, queue/cache, mạng, HA/backup/DR và kịch bản 4.000 DAU.
-- Gồm 45 dòng báo giá TSV, 14 mã bằng chứng với 31 ảnh nhúng, nội dung 2 slide, 3 dòng workspace gửi Tú và 3 đáp án hội đồng.
-- Dự toán riêng phần Thành: **1.425,77 USD/tháng ở 2.000 DAU**, **2.577,29 USD/tháng ở 4.000 DAU**, chưa VAT. Khi ghép nhóm cần đối chiếu các khoản S3/audit/network dùng chung để tránh cộng trùng.
-- File Markdown có ảnh nhúng nên dung lượng khoảng 11 MB; tải file nếu GitHub không hiển thị đầy đủ bản xem trước.
+- **Bản bàn giao hiện tại:** [Thanh_cloud_data.md](docs/Thanh_cloud_data/Thanh_cloud_data.md) — ECS Fargate, PostgreSQL Multi-AZ/pgvector, S3, connectors, mạng, cache/queue và HA/backup/DR; staging workspace 100 GiB.
+- Subtotal phần đã định giá: **1.436,46 USD/tháng ở 2.000 DAU**, **2.520,57 USD/tháng ở 4.000 DAU**, chưa VAT; còn 2 dòng PENDING được thu hẹp. Đây không phải TOTAL của nhóm.
+- [TSV 2.000 DAU](docs/Thanh_cloud_data/Thanh_cost_2000.tsv), [TSV 4.000 DAU](docs/Thanh_cloud_data/Thanh_cost_4000.tsv), [3 slide nội dung](docs/Thanh_cloud_data/Thanh_3_slides.md), [sơ đồ Mermaid](docs/Thanh_cloud_data/Thanh_cloud_data_architecture.mmd).
+- [Hướng dẫn ghép cho Phúc](docs/Thanh_cloud_data/Phuc_handoff.md) và [kết quả rà PENDING trong repo](docs/Thanh_cloud_data/Repo_pending_review.md): không cộng trùng monitoring/ECR/S3 audit/mạng; token vault của Tú đã có giá 8,80 USD/tháng, monitoring cơ bản 17,96 USD/tháng.
+- Có 34 ảnh bằng chứng thực tế, catalog AWS gốc, SKU/rateCode và SHA-256 trong `docs/Thanh_cloud_data/`. Chạy `python docs/Thanh_cloud_data/recalculate.py` để tính lại độc lập bằng Python chuẩn.
+- [Nhiệm vụ 2 cũ](docs/VBot_Nhiem_vu_2_Thanh.md) giữ làm lịch sử tham khảo; không cộng gộp với bản mới. `G03.md`/XLSX/slide chung chưa thay bằng subtotal mới, Phúc cần ghép trước khi nộp.
 
 ## Chạy sizing
 

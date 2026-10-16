@@ -1,0 +1,274 @@
+[
+  {
+    "code": "E01",
+    "file": "evidence/E01.jpg",
+    "sha256": "5c59c10b24cf83e406d2219e3f59fece348605f164ef40bae9ba775a7f43adbc",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[EC2 pricing](https://aws.amazon.com/ec2/pricing/on-demand/)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E03",
+    "file": "evidence/E03-region.jpg",
+    "sha256": "81bc6ede6a837562b37ed079e6f51a41797a7ac83628cf55dc683e3cf7bc8363",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[KMS calculator](https://calculator.aws/#/createCalculator/KMS); [pricing/rotation](https://aws.amazon.com/kms/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/awskms/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E03",
+    "file": "evidence/E03.jpg",
+    "sha256": "61b89efb2498e4fcee48e93155aa88436cf1c5713baa3dea961bac87429a5b00",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[KMS calculator](https://calculator.aws/#/createCalculator/KMS); [pricing/rotation](https://aws.amazon.com/kms/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/awskms/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E04",
+    "file": "evidence/E04-region.jpg",
+    "sha256": "fc216fd358f98b44195df5b1bc0d585501ff44c617a5f9758ea58ed5f504bd2b",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[S3 calculator](https://calculator.aws/#/createCalculator/S3); [S3 pricing](https://aws.amazon.com/s3/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E04",
+    "file": "evidence/E04.jpg",
+    "sha256": "f9b3cba025a0c677e3e5d216ca587623e985c07a8f1c5d212446853cb0e90fbc",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[S3 calculator](https://calculator.aws/#/createCalculator/S3); [S3 pricing](https://aws.amazon.com/s3/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E05",
+    "file": "evidence/E05.jpg",
+    "sha256": "2606e0ec52cd86b5831f8bb8b7cae558b5bb9d46e894d380d5b263d2c9a9f123",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[S3 calculator](https://calculator.aws/#/createCalculator/S3); [AWS Data Transfer Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSDataTransfer/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E07",
+    "file": "evidence/E07-region.jpg",
+    "sha256": "f123891af111f427367a49bfc61b75f8b1bbadde3036bafcac50256ed96ba8a8",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[VPC calculator](https://calculator.aws/#/createCalculator/VPC); [VPC pricing](https://aws.amazon.com/vpc/pricing/); [interface endpoint Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E07",
+    "file": "evidence/E07-NAT.jpg",
+    "sha256": "62758b80bd15a128dfd3b41fe78c81ca8ed2264a5d12c27bbe2b918485452858",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[VPC calculator](https://calculator.aws/#/createCalculator/VPC); [VPC pricing](https://aws.amazon.com/vpc/pricing/); [interface endpoint Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E07",
+    "file": "evidence/E07-IPv4.jpg",
+    "sha256": "b7fac05a79495e4185aad71ab3c630ccce96091ccd449622afb08afd4fa00571",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[VPC calculator](https://calculator.aws/#/createCalculator/VPC); [VPC pricing](https://aws.amazon.com/vpc/pricing/); [interface endpoint Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E07",
+    "file": "evidence/E07-gateway.jpg",
+    "sha256": "019ae1f5693e458d5a84c4dc5b7e8ee148921d0c7294855c5617f00d7cf7ad42",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[VPC calculator](https://calculator.aws/#/createCalculator/VPC); [VPC pricing](https://aws.amazon.com/vpc/pricing/); [interface endpoint Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-region.jpg",
+    "sha256": "e40210d3cc83399f56b8b371ec9e592eee76ef403841acccb37c6cc10699e472",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-RDS-prod.jpg",
+    "sha256": "088a7032bff7c086afb277a8a76d2feba0694eab9b59d8f6a4ca0206524576b4",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-storage.jpg",
+    "sha256": "1bbce33b8b4a65d534915bd59362ce0f906cad804cded3390fa42de5d8087d36",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-single.jpg",
+    "sha256": "f525d73b62297dd0a1cca481c9d50a27f63e4bc26c54ed3cf2777964f41022a3",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-single-storage.jpg",
+    "sha256": "6bccc16b9b09125bc16faac1ad02ebbbf04a3a0e02a050006f6a1d5c389b072e",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-backup.jpg",
+    "sha256": "6abf15016e7da83647069390b933a14a4ccbeaede3d72632d330563bee53f35c",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-expand.jpg",
+    "sha256": "53d5f9f6561bd72763368b7e8892ceb274d677d9a2928eafe04901640aa899f6",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E08",
+    "file": "evidence/E08-expand-calc.jpg",
+    "sha256": "aa815eedfdc54a40a32a5df96de81c878aeff97ae3988254ee6e52ce11bce83d",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[RDS calculator](https://calculator.aws/#/createCalculator/RDSPostgreSQL); [pricing](https://aws.amazon.com/rds/postgresql/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRDS/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E09",
+    "file": "evidence/E09-region.jpg",
+    "sha256": "b21a311bff21f869c6d6d7ccc0234b88e3c79caf61fe89680a0a670e83af8c05",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[ALB calculator](https://calculator.aws/#/createCalculator/ElasticLoadBalancing); [ELB pricing](https://aws.amazon.com/elasticloadbalancing/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSELB/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E09",
+    "file": "evidence/E09-ALB.jpg",
+    "sha256": "a552e30cf985f224ae9e5c7675a6311c7ba7708b2f4b9ebae33ec193021da888",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[ALB calculator](https://calculator.aws/#/createCalculator/ElasticLoadBalancing); [ELB pricing](https://aws.amazon.com/elasticloadbalancing/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSELB/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E09",
+    "file": "evidence/E09-LCU.jpg",
+    "sha256": "1e562cb1286921ceddd4f57d8f6c93b48511e8fa4343c32cf5e2ff048e3b5e86",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[ALB calculator](https://calculator.aws/#/createCalculator/ElasticLoadBalancing); [ELB pricing](https://aws.amazon.com/elasticloadbalancing/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSELB/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E10",
+    "file": "evidence/E10-region.jpg",
+    "sha256": "376bb523e9a8c7f65cb30cb0ec0f2e50f5c0d349ea6dedb4c8326db99add94b4",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[SQS calculator](https://calculator.aws/#/createCalculator/SQS); [SQS pricing](https://aws.amazon.com/sqs/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSQueueService/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E10",
+    "file": "evidence/E10-SQS.jpg",
+    "sha256": "248ddeb43256fdfb0883f89718c9f628339525f8c2a050dbb582a0f544ad828f",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[SQS calculator](https://calculator.aws/#/createCalculator/SQS); [SQS pricing](https://aws.amazon.com/sqs/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSQueueService/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E11",
+    "file": "evidence/E11-region.jpg",
+    "sha256": "7878b5be02697d4f6f88fa889fe061946b325b0fe37de03a2b2702de8c207dc6",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[WAF calculator](https://calculator.aws/#/createCalculator/WAF); [WAF pricing](https://aws.amazon.com/waf/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/awswaf/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E11",
+    "file": "evidence/E11-WAF-calc.jpg",
+    "sha256": "b5da025a25f998c025623bc2a5185b61f03325b79f3358c558ff6ff06fc07103",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[WAF calculator](https://calculator.aws/#/createCalculator/WAF); [WAF pricing](https://aws.amazon.com/waf/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/awswaf/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E12",
+    "file": "evidence/E12-DNS.jpg",
+    "sha256": "c7a769e6955e248b471bee08a8fe2a25abd01dd8acf72237cd41ece72a7821f5",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[Route53 pricing](https://aws.amazon.com/route53/pricing/); [Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonRoute53/current/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E13",
+    "file": "evidence/E13-ECS.jpg",
+    "sha256": "f0032be1544571b5c2786e023a4705695392ae245320e2e211a8c6a61964b75e",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[ECS pricing](https://aws.amazon.com/ecs/pricing/); [ACM pricing](https://aws.amazon.com/certificate-manager/pricing/)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E13",
+    "file": "evidence/E13-TLS.jpg",
+    "sha256": "9140d25d79d989e9550aacc373d632891a92890b3069088a2a9ad0241ed22404",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[ECS pricing](https://aws.amazon.com/ecs/pricing/); [ACM pricing](https://aws.amazon.com/certificate-manager/pricing/)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E14",
+    "file": "evidence/E14-ECR.jpg",
+    "sha256": "f5880710dc40d83ddf8a13f7cb16fe1ad50cdefd22e42214914f774ac9d730a4",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[ECR pricing](https://aws.amazon.com/ecr/pricing/); [regional Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECR/current/ap-southeast-1/index.json)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E15",
+    "file": "evidence/E15-backup-policy.jpg",
+    "sha256": "c6bc6aa324052186a355e9dc56983fbd688875a6344ac6e62f71179cec52beab",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[AWS Database Blog](https://aws.amazon.com/blogs/database/demystifying-amazon-rds-backup-storage-costs/)",
+    "provenance": "Ảnh có sẵn trong workspace cùng ngày; giữ byte gốc"
+  },
+  {
+    "code": "E16",
+    "file": "evidence/E16-Fargate.png",
+    "sha256": "86a3a017276af3d6c70ef910c12cd8256bb0d189829f5d60d91f5c9af2284d26",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[Fargate pricing](https://aws.amazon.com/fargate/pricing/); [Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECS/current/ap-southeast-1/index.json)",
+    "provenance": "Browser screenshot trang AWS trong phiên làm việc"
+  },
+  {
+    "code": "E17",
+    "file": "evidence/E17-PrivateLink.png",
+    "sha256": "2873c31147f94b606fb8c430831135a430f6a69a73332dc351669c5e5cdfa3f4",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[PrivateLink pricing](https://aws.amazon.com/privatelink/pricing/); [Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-1/index.json)",
+    "provenance": "Browser screenshot trang AWS trong phiên làm việc"
+  },
+  {
+    "code": "E17",
+    "file": "evidence/E17-PrivateLink-data.png",
+    "sha256": "72fd5395308ffb737da5c192d123120181722e20c9a9f23e4143d30262f0aa03",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[PrivateLink pricing](https://aws.amazon.com/privatelink/pricing/); [Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-1/index.json)",
+    "provenance": "Browser screenshot trang AWS trong phiên làm việc"
+  },
+  {
+    "code": "E18",
+    "file": "evidence/E18-CloudWatch.png",
+    "sha256": "fc868d85cd8a9f216a930b0850a7e18757b622cb0aa422d6507941c7e104cb45",
+    "capture_date": "2026-10-16 Asia/Saigon",
+    "source": "[CloudWatch pricing](https://aws.amazon.com/cloudwatch/pricing/); [Price List](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonCloudWatch/current/ap-southeast-1/index.json)",
+    "provenance": "Browser screenshot trang AWS trong phiên làm việc"
+  }
+]

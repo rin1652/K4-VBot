@@ -1,5 +1,11 @@
 # VBot Workplace — Handoff của Tú
 
+> **LƯU Ý (2026-10-16): Tài liệu này là bản nháp lịch sử, không dùng để ghép/nộp.**
+> Subtotal 256,16 USD và kiến trúc/giá bên dưới đã được thay thế bởi
+> [Tu_security_ops.md](Tu_security_ops.md) và
+> [docs/Tu_security_ops_handoff.md](docs/Tu_security_ops_handoff.md).
+> Giữ bản nháp để tra lịch sử quyết định; mọi dòng báo giá và lời thoại mới lấy từ hai file trên.
+
 > Phạm vi: sandbox, định danh/phân quyền, secrets/KMS, AI & data governance,
 > monitoring/FinOps, CI/CD và staging. Region chính: AWS `ap-southeast-1`
 > (Singapore). Giá kiểm tra ngày 2026-10-16, USD/tháng, chưa VAT, không trừ
